@@ -24,6 +24,10 @@ let package = Package(
     .package(
       url: "https://github.com/apple/swift-argument-parser.git", 
       exact: "1.2.3"),
+
+    .package(
+        url: "https://github.com/JohnSundell/ShellOut.git",
+        exact: "2.3.0"),
   ],
   targets: [
     .executableTarget(
@@ -36,6 +40,9 @@ let package = Package(
 
     .target(
       name: "XCResult2Cobertura",
+      dependencies: [
+        .product(name: "ShellOut", package: "ShellOut"),
+      ],
       path: "Sources/Lib"),
 
     .testTarget(
