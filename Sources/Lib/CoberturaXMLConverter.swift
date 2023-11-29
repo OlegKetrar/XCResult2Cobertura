@@ -23,12 +23,6 @@ public struct CoberturaXMLEncoder {
     let packagesElement = XMLElement(name: "packages")
     rootElement.addChild(packagesElement)
 
-    if report.packages.isEmpty {
-      print("empty")
-    } else {
-      print("not-empty")
-    }
-
     try report.packages.forEach { package in
       let packageElement = XMLElement(name: "package")
 
