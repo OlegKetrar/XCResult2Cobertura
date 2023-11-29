@@ -61,4 +61,16 @@ struct ConvertCommand: AsyncParsableCommand {
       return SimpleShell()
     }
   }
+
+  func testParameters() {
+    print("reportPath: \(reportPath)")
+    print("outputPath: \(outputPath)")
+    print("changedFiles start count: \(changedFiles.count)")
+
+    for file in changedFiles {
+      print("-- \(file)")
+    }
+
+    print("changedFiles end")
+  }
 }
