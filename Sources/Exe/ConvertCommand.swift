@@ -8,10 +8,11 @@ import Foundation
 import ArgumentParser
 import XCResult2Cobertura
 
+@main
 struct ConvertCommand: AsyncParsableCommand {
 
   static let configuration = CommandConfiguration(
-    commandName: "convert",
+    commandName: "xcr2c",
     abstract: "Covert .xcresult files to Cobertura XML")
 
   @Argument(
@@ -24,22 +25,31 @@ struct ConvertCommand: AsyncParsableCommand {
     help: "Output path to resulting XML file")
   var outputPath: String
 
-  @Option(
-    name: .long,
-    help: "List of source code files")
+  @Argument(
+    help: "List of files to filter the report",
+    completion: .file())
   var changedFiles: [String]
 
+#if !RELEASE
   @Option(name: .long, help: "Path to project directory to run from Xcode during debug")
   var localDevPath: String?
+#endif
+
+  @Flag(help: "Print executed shell commands")
+  var verbose: Bool = false
 
   func run() async throws {
-    let shell = makeShell()
+    var shell: Shell = makeShell()
+
+    if verbose {
+      shell = PrintableShell(shell)
+    }
 
     let converter = XCResult2Cobertura(
       reportPath: reportPath,
       outputPath: outputPath,
       changedFiles: changedFiles,
-      shell: PrintableShell(shell))
+      shell: shell)
 
     try await converter.convert()
   }
