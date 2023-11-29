@@ -63,7 +63,7 @@ struct CoberturaXML: Codable {
         var hits: String
     }
 
-    var sourcres: String
+    var sources: String
     var lineRate: String
     var linesCovered: String
     var linesValid: String
@@ -101,7 +101,7 @@ public struct XCResult2Cobertura {
         ])
         .components(separatedBy: "\n")
 
-        var allFilesXcov = wholeReport.targets.flatMap(\.files)
+        let allFilesXcov = wholeReport.targets.flatMap(\.files)
         var packages: [String : CoberturaXML.Package] = [:]
 
         for relPath in changedFiles where fileList.contains(relPath) {
@@ -139,12 +139,8 @@ public struct XCResult2Cobertura {
             packages[fileDir] = package
         }
 
-        let allTestedFiles: [String] = Array(packages.keys)
-        let rootPath: String = ""
-        // TODO: calculate absolute rootPath
-
         let cobertura = CoberturaXML(
-            sourcres: rootPath,
+            sources: FileManager.default.currentDirectoryPath,
             lineRate: "\(wholeReport.lineCoverage)",
             linesCovered: "\(wholeReport.coveredLines)",
             linesValid: "\(wholeReport.executedLines)",
@@ -152,8 +148,15 @@ public struct XCResult2Cobertura {
             version: "diff_coverage 0.1",
             packages: Array(packages.values))
 
-        // TODO: write XML to `outputPath`
-        _ = cobertura
+        let xmlData = try CoberturaXMLEncoder().encode(report: cobertura)
+
+        let isSuccess = FileManager.default.createFile(
+            atPath: outputPath,
+            contents: xmlData)
+
+        if isSuccess == false {
+            throw GenericError("cant write Data to file \(outputPath)")
+        }
     }
 
     func parseJson<T: Decodable>(from command: String, _ arguments: [String] = []) throws -> T {
