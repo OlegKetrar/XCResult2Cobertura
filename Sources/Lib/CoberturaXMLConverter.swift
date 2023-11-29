@@ -6,14 +6,6 @@
 
 import Foundation
 
-struct GenericError: Swift.Error {
-  let message: String
-
-  init(_ message: String) {
-    self.message = message
-  }
-}
-
 public struct CoberturaXMLEncoder {
 
   func encode(report: CoberturaXML) throws -> Data {
@@ -30,6 +22,12 @@ public struct CoberturaXMLEncoder {
 
     let packagesElement = XMLElement(name: "packages")
     rootElement.addChild(packagesElement)
+
+    if report.packages.isEmpty {
+      print("empty")
+    } else {
+      print("not-empty")
+    }
 
     try report.packages.forEach { package in
       let packageElement = XMLElement(name: "package")
