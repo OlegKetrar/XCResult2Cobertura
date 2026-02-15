@@ -1,0 +1,52 @@
+{
+  "configurations" : [
+    {
+      "id" : "8E0CDE99-F8FE-4D8C-A266-3FE1BBAB432A",
+      "name" : "standard",
+      "options" : {
+        "addressSanitizer" : {
+          "enabled" : true
+        },
+        "threadSanitizerEnabled" : false
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:ios-test-app.xcodeproj",
+          "identifier" : "55FF23542B151E65001D1ECD",
+          "name" : "ios-test-app"
+        },
+        {
+          "containerPath" : "container:FeatureOne",
+          "identifier" : "FeatureOne",
+          "name" : "FeatureOne"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ios-test-app.xcodeproj",
+      "identifier" : "55FF23542B151E65001D1ECD",
+      "name" : "ios-test-app"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ios-test-app.xcodeproj",
+        "identifier" : "55FF236A2B151E66001D1ECD",
+        "name" : "ios-test-appTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:FeatureOne",
+        "identifier" : "FeatureOneTests",
+        "name" : "FeatureOneTests"
+      }
+    }
+  ],
+  "version" : 1
+}

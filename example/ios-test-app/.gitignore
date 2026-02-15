@@ -1,0 +1,9 @@
+.DerivedData/
+DerivedData/
+build/
+.swiftpm/
+
+*/.DerivedData/
+*/DerivedData/
+*/build/
+*/.swiftpm/
