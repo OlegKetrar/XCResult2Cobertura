@@ -36,7 +36,10 @@ let package = Package(
 
     .target(
       name: "XCResult2Cobertura",
-      path: "Sources/Lib"),
+      path: "Sources/Lib",
+      resources: [
+        .copy("coverage-04.dtd")
+      ]),
 
     .testTarget(
       name: "XCResult2CoberturaTests",

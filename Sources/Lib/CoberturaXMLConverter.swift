@@ -74,11 +74,11 @@ public struct CoberturaXMLEncoder {
   func makeDTD() throws -> XMLDTD {
     let urlStr = "http://cobertura.sourceforge.net/xml/coverage-04.dtd"
 
-    guard let url = URL(string: urlStr) else {
+    guard let data = coverageDTDString.data(using: .utf8) else {
       throw GenericError("cant create URL from String")
     }
 
-    let dtd = try XMLDTD(contentsOf: url)
+    let dtd = try XMLDTD(data: data)
     dtd.name = "coverage"
     dtd.systemID = urlStr
 
